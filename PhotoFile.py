@@ -8,7 +8,7 @@ class Photo():
     def __init__(self, fname, path):
         self.filename = fname
         self.path = path
-        self.cnt = 100
+        self.cnt = 40000
 
     def createFileList(self):
         cnt = 0

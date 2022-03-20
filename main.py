@@ -26,12 +26,12 @@ class PhotoFrame(tk.Tk):
 
         self.canvas.pack()
 
-        if os.path.exists(DATA_FILE_NAME):
-            os.remove(DATA_FILE_NAME)
+        #if os.path.exists(DATA_FILE_NAME):
+        #    os.remove(DATA_FILE_NAME)
         #######
         # 파일 리스트를 만든다.
         self.Photo = Photo(DATA_FILE_NAME, PHOTO_FILE_PATH)
-        self.Photo.createFileList()
+        #self.Photo.createFileList()
 
         self.Run()
 
@@ -46,8 +46,9 @@ class PhotoFrame(tk.Tk):
 
     def displayPhoto(self):
         image, fname, p_date = self.Photo.getRandomPhoto()
-        wW = self.winfo_screenwidth()-10
-        wH = self.winfo_screenheight() -10
+        wW = int(self.winfo_screenwidth()) -10
+        wH = int(self.winfo_screenheight()) -10
+
 
         # 이미지 사이즈는 4:3(1.3)  16:9(1.77)  3:2(1.5) |   3:4(0.75) 9:16(0.56) 2:3(0.67)
         # 화면 사이즈는 1920:1080 (1.78) 1:1
