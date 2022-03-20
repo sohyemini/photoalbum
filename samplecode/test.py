@@ -1,15 +1,28 @@
-from tkinter import *
+import tkinter as tk
 
-#Create an instance of tkinter frame
-win= Tk()
 
-#Set the geometry of frame
-win.geometry("650x250")
+class App():
+    def __init__(self):
+        self.root = tk.Tk()
+        self.root.attributes('-fullscreen', True)
+        self.main_frame = tk.Frame(self.root)
+        self.main_frame.config(background='red', cursor='none')
+        self.main_frame.pack(fill=tk.BOTH, expand=tk.TRUE)
+        self.root.bind('<F1>', self.opennote)
+        self.root.bind('<F2>', self.closenote)
+        self.root.bind('<F3>', self.quit)
+        l = tk.Label(self.main_frame, text="some text here")
+        l.pack()
+        self.root.mainloop()
 
-#Get the current screen width and height
-screen_width = win.winfo_screenwidth()
-screen_height = win.winfo_screenheight()
+    def opennote(self, event):
+        self.n = tk.Text(self.main_frame, background='blue')
+        self.n.pack()
 
-#Print the screen size
-print("Screen width:", screen_width)
-print("Screen height:", screen_height)
+    def closenote(self, event):
+        self.n.destroy()
+
+    def quit(self, event):
+        self.root.destroy()
+
+App()

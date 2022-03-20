@@ -8,14 +8,16 @@ from PhotoFile import Photo
 
 DATA_FILE_NAME  = "photolist.txt"
 PHOTO_FILE_PATH = "/home/pi/media/Photo/Original"
-DURATION        = 120
+DURATION        = 30
 
 class PhotoFrame(tk.Tk):
     def __init__(self, window=None):
         super().__init__()
 
+        self.config(cursor='none')
+
         self.overrideredirect(True)
-        if False:
+        if True:
             self.geometry("%dx%d+%d+%d" % (self.winfo_screenwidth()+10, self.winfo_screenheight()+10, -5, -5))
             self.canvas = Canvas(self, width=self.winfo_screenwidth()+10, height=self.winfo_screenheight()+10, bg='black')
         else:

@@ -8,7 +8,7 @@ class Photo():
     def __init__(self, fname, path):
         self.filename = fname
         self.path = path
-        self.cnt = 40000
+        self.cnt = 100
 
     def createFileList(self):
         cnt = 0
@@ -35,11 +35,12 @@ class Photo():
             with open(self.filename) as f:
                 data = f.readlines()[index]
             length = len(data)
-            image = Image.open(data[0:length-1])
-            if image.width > image.height:
-                print(data[0:length-1])
-                photo_date = self.getPhotoDate(data[0:length-1])
-                return image, data[0:length-1], photo_date
+            if os.path.exists(data[0:length-1]):
+                image = Image.open(data[0:length-1])
+                if image.width > image.height:
+                    print(data[0:length-1])
+                    photo_date = self.getPhotoDate(data[0:length-1])
+                    return image, data[0:length-1], photo_date
         return None, 0, "없음"
 
 
