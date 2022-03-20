@@ -26,12 +26,12 @@ class PhotoFrame(tk.Tk):
 
         self.canvas.pack()
 
-        #if os.path.exists(DATA_FILE_NAME):
-        #    os.remove(DATA_FILE_NAME)
+        if os.path.exists(DATA_FILE_NAME):
+            os.remove(DATA_FILE_NAME)
         #######
         # 파일 리스트를 만든다.
         self.Photo = Photo(DATA_FILE_NAME, PHOTO_FILE_PATH)
-        #self.Photo.createFileList()
+        self.Photo.createFileList()
 
         self.Run()
 
