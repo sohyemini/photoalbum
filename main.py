@@ -7,14 +7,14 @@ from time import sleep
 from PhotoFile import Photo
 
 DATA_FILE_NAME  = "photolist.txt"
-PHOTO_FILE_PATH = "/home/pi/media/Photo/Original"
-DURATION        = 30
+PHOTO_FILE_PATH = "/Volumes/rickykwak/Photo/Original"
+DURATION        = 5
 
 class PhotoFrame(tk.Tk):
     def __init__(self, window=None):
         super().__init__()
 
-        self.config(cursor='none')
+        #self.config(cursor='none')
 
         self.overrideredirect(True)
         if True:
@@ -24,15 +24,14 @@ class PhotoFrame(tk.Tk):
             self.geometry("%dx%d+%d+%d" % (500, 500, 0, 0))
             self.canvas = Canvas(self, width=400, height=400, bg='black')
 
-        self.canvas.bind('<Button-1>', self.on_click)
         self.canvas.pack()
 
-        #if os.path.exists(DATA_FILE_NAME):
-        #    os.remove(DATA_FILE_NAME)
+        if os.path.exists(DATA_FILE_NAME):
+            os.remove(DATA_FILE_NAME)
         #######
         # 파일 리스트를 만든다.
         self.Photo = Photo(DATA_FILE_NAME, PHOTO_FILE_PATH)
-        #self.Photo.createFileList()
+        self.Photo.createFileList()
 
         self.Run()
 
@@ -47,19 +46,20 @@ class PhotoFrame(tk.Tk):
 
     def displayPhoto(self):
         image, fname, p_date = self.Photo.getRandomPhoto()
-        wW = self.winfo_screenwidth()
-        wH = self.winfo_screenheight()
+        wW = self.winfo_screenwidth()-10
+        wH = self.winfo_screenheight() -10
 
-        #if image.height/image.width > wH/wW :   # 가로기준 리사이즈
-        #    imageH = wH
-        #    imageW = int(image.width * wH / image.height)
-        #else:                                   # 세로기준 리사이즈
-        # 가로기준 리사이즈는 사진이 좁아보인다. 아무래도 넓게 보이는 것이 좋아서 이렇게 하기로 함
-        imageW = wW
-        imageH = int(image.height * wW / image.width)
+        # 이미지 사이즈는 4:3(1.3)  16:9(1.77)  3:2(1.5) |   3:4(0.75) 9:16(0.56) 2:3(0.67)
+        # 화면 사이즈는 1920:1080 (1.78) 1:1
+        if image.width/image.height > wW/wH:
+            imageH = wH
+            imageW = int(image.width * wH / image.height)
+        else:
+            imageW = wW
+            imageH = int(image.height * wW / image.width)
 
-        x = int((wW - imageW) / 2)
-        y = int((wH - imageH) / 2)
+        x = int((wW - imageW) / 2) + 5
+        y = int((wH - imageH) / 2) + 5
 
         pic = image.resize((imageW, imageH))
         picture = ImageTk.PhotoImage(pic)
@@ -70,11 +70,11 @@ class PhotoFrame(tk.Tk):
 
         self.canvas.create_image(x, y, anchor=NW, image=picture)
         self.canvas.delete('nameTags')
-        self.canvas.create_text(wW/2, wH - 10, text=str, font=("나눔고딕코딩", 10), fill="white", tags=('nameTags',))
+        self.canvas.create_text(wW/2, wH - 10, text=str, font=("나눔고딕코딩", 14), fill="green", tags=('nameTags',))
+        #self.canvas.create_text(wW / 2, 500, text=str, font=("나눔고딕코딩", 14), fill="green", tags=('nameTags',))
         self.canvas.update()
 
 
 if __name__ == "__main__":
     app = PhotoFrame()
-    #app.config(cursor="None")
     app.mainloop()

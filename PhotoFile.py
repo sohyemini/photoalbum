@@ -29,7 +29,9 @@ class Photo():
         return cnt
 
     def getRandomPhoto(self):
+        cnt = 0
         while(1):
+            cnt += 1
             index = random.randint(1, self.cnt)
             print(f"random index number = {index}")
             with open(self.filename) as f:
@@ -41,6 +43,8 @@ class Photo():
                     print(data[0:length-1])
                     photo_date = self.getPhotoDate(data[0:length-1])
                     return image, data[0:length-1], photo_date
+            #if cnt > 100: break
+
         return None, 0, "없음"
 
 
@@ -48,7 +52,7 @@ class Photo():
         if sys.platform.startswith('win'):
             image = Image.open(fname)
             photo_date = "없음"
-            img_exif = img.getexif()
+            img_exif = image.getexif()
             if img_exif is None:
                 print('Sorry, image has no exif data.')
             else:
